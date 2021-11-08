@@ -1,10 +1,19 @@
+#' ach_get_data
+#'
+#' This function pulls ACHQC data. 
+#' @param date folder name which corresponds to a date. If null, will pull most recent date
+#' @param dir file path relative to working directory
+#' @export
+#' @examples
+#' ach_get_data(date = "2021-11-08", dir = "../../../data")
+
 ach_get_data <- function (date = NULL, dir = NULL) 
 {
   dir <- if (is.null(dir)) {
     file.path("..", "..", "..", "data", "standard")
   }
   else {
-    file.path(dir, "data", "standard")
+    file.path(dir)
   }
   possible_dirs <- dir(path = dir, pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
   if (length(possible_dirs) == 0) {
