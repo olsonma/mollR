@@ -2,3 +2,4 @@
 
 export(ach_get_data)
 export(gg_two_column_consort)
+export(gg_two_column_consort_subgroup)

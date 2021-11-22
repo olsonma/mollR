@@ -14,7 +14,13 @@ gg_two_column_consort(data, var, top_box_text, date = NULL)
 \item{top_box_text}{string, text to display in top box of diagram}
 
 \item{date}{string, date of data pull. if NULL, won't display date.}
+
+\item{box_height}{height of exclusion boxes. default is 0.4.}
+
+\item{box_width}{width of subgroup boxes. default is 0.22.}
 }
 \description{
-This function creates a two column consort
+This function creates a two column consort figure with "before" and "after" population
+N If you would also like to display subgroup population Ns, please use
+\code{gg_two_column_consort_subgroup}
 }
