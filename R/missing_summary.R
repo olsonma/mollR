@@ -5,7 +5,7 @@
 #' @param type Type of output. One of `"both"`, `"row"`, `"col"`, or `"complete"`. The default is `"both"` for both `"row"`-wise and `"col"`-wise missing data summaries. `type="complete"` will report proportion of records with complete data. 
 #' @param upper_limit A number.  The right tail of the frequency distribution reported in the `type="row"` summary is truncated to "upper_limit +".
 #' @param max_vars  A number.  Limits the list of variables reported `type="col"` to the first `max_vars` most frequently missing variables.  If there are multiple variables with the same number of missing values, all such the variables will be reported. (This means more than max_vars variables can appear in the output)
-#' @param include_vars A vector of variable names or a regular expression to select variables that match a pattern 
+#' @param include_vars A vector of variable names or a regular expression to select variables that match a pattern. You may drop variables by providing a regular expression preceded by `!` (`include_vars = "!qol"`, for example, would drop variables matched by "qol") 
 #' @details The output is a list with the "by row" summary and the "by column" summary.
 #' @keywords missingness_info
 #' @export
@@ -23,6 +23,8 @@
 #' missing_summary(airquality, type = "row", upper_limit = 3)
 #' upper_limit = 6 will not return "N+" like the above example because `airquality` has 6 total variables
 #' missing_summary(airquality, type = "row", upper_limit = 6)
+#' drop Ozone only
+#' missing_summary(airquality, type = "col", include_vars = "!Ozone")
 
 missing_summary <- function(
   data,
@@ -34,7 +36,12 @@ missing_summary <- function(
   if(!any(type == c("both", "row", "col", "complete")) | length(type) > 1) stop("type must be one of \"both\", \"row\", \"col\", or \"complete\"")
   if(!missing(include_vars)){
     if(length(include_vars) == 1){
-      data <- data[,grep(include_vars, names(data), ignore.case = TRUE)]
+      if(grepl("\\!", include_vars)){
+        include_vars <- gsub("\\!", "", include_vars)
+        data <- data[,!grepl(include_vars, names(data), ignore.case = TRUE)]
+      } else {
+        data <- data[,grep(include_vars, names(data), ignore.case = TRUE)]
+      }
     } else if(is.character(include_vars)){
       data <- data[,include_vars] 
     } else {
