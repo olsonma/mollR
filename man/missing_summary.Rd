@@ -13,7 +13,7 @@ missing_summary(data, upper_limit, max_vars, include_vars, type = "both")
 
 \item{max_vars}{A number.  Limits the list of variables reported \code{type="col"} to the first \code{max_vars} most frequently missing variables.  If there are multiple variables with the same number of missing values, all such the variables will be reported. (This means more than max_vars variables can appear in the output)}
 
-\item{include_vars}{A vector of variable names or a regular expression to select variables that match a pattern}
+\item{include_vars}{A vector of variable names or a regular expression to select variables that match a pattern. You may drop variables by providing a regular expression preceded by \code{!} (\code{include_vars = "!qol"}, for example, would drop variables matched by "qol")}
 
 \item{type}{Type of output. One of \code{"both"}, \code{"row"}, \code{"col"}, or \code{"complete"}. The default is \code{"both"} for both \code{"row"}-wise and \code{"col"}-wise missing data summaries. \code{type="complete"} will report proportion of records with complete data.}
 }
@@ -37,5 +37,7 @@ Below, the upper_limit will provide the same results
 missing_summary(airquality, type = "row", upper_limit = 3)
 upper_limit = 6 will not return "N+" like the above example because `airquality` has 6 total variables
 missing_summary(airquality, type = "row", upper_limit = 6)
+drop Ozone only
+missing_summary(airquality, type = "col", include_vars = "!Ozone")
 }
 \keyword{missingness_info}
