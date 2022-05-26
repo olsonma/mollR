@@ -8,7 +8,9 @@
 #' @param border1 character, color of histogram border of group 1, default is black
 #' @param border2 character, color of histogram border of group 2, default is black
 #' @param breaks a single number giving the number of cells for the histogram, default is 100
-#' @param legend logical, whether to add legend, default is TRUE
+#' @param label logical, whether to add group labels above histograms, default is TRUE
+#' @param legend logical, whether to add legend, default is FALSE
+#' @param legendloc location location specified by setting to a single keyword from the list "bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" and "center". Default is "bottomleft."
 #' @param flipaxis logical, direction of the butterfly. FALSE is butterfly shape i.e. reflected over y-axis, TRUE is reflected over x-axis. Default is TRUE.
 #' @param psrange range of histogram values
 #' @export
@@ -17,11 +19,10 @@
 #' butterfly(x = data$ps, data$group, label = F, flipaxis = F, breaks = 10)
 
 butterfly_plot <- function (x, y, col1 = "#FF000060", col2 = "#3200D360", border1 = "black", 
-                            border2 = "black", breaks = 100, legend = T, flipaxis = F, psrange = NULL) 
+                            border2 = "black", breaks = 100, label = T, legend = F, legendloc = "bottomleft", flipaxis = F, psrange = NULL) 
 { 
   if(!is.logical(flipaxis)) stop("flipaxis must be logical")
   if(!is.logical(legend)) stop("legend must be logical")
-  
   h1 <- hist(x, breaks = breaks, plot = FALSE)
   x1 <- cut(x, breaks = h1$breaks)
   t1 <- as.matrix(table(x1, y))
@@ -56,8 +57,12 @@ butterfly_plot <- function (x, y, col1 = "#FF000060", col2 = "#3200D360", border
     axis(1, at = at1, labels = abs(at1)) 
   }
   
-  if(legend){
+  if(label){
     text(max(t1)/2, nrow(t2) + 1, attributes(t1)$dimnames$y[1])
     text(-max(t1)/2, nrow(t2) + 1, attributes(t1)$dimnames$y[2])
   }
+  if(legend){
+    legend(legendloc, c("", colnames(t2)[1], colnames(t2)[2]), col = c("white",col1, col2), bty = "n", lwd = 3, lty = c(0,1,1))
+  }
+
 }

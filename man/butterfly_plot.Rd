@@ -12,7 +12,9 @@ butterfly_plot(
   border1 = "black",
   border2 = "black",
   breaks = 100,
-  legend = T,
+  label = T,
+  legend = F,
+  legendloc = "bottomleft",
   flipaxis = F,
   psrange = NULL
 )
@@ -32,7 +34,11 @@ butterfly_plot(
 
 \item{breaks}{a single number giving the number of cells for the histogram, default is 100}
 
-\item{legend}{logical, whether to add legend, default is TRUE}
+\item{label}{logical, whether to add group labels above histograms, default is TRUE}
+
+\item{legend}{logical, whether to add legend, default is FALSE}
+
+\item{legendloc}{location location specified by setting to a single keyword from the list "bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" and "center". Default is "bottomleft."}
 
 \item{flipaxis}{logical, direction of the butterfly. FALSE is butterfly shape i.e. reflected over y-axis, TRUE is reflected over x-axis. Default is TRUE.}
 
