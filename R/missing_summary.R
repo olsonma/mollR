@@ -74,8 +74,8 @@ missing_summary <- function(
     out1 <- data.frame(
       `Number of Missing Variables<br>(within a record)` = names(out),
       `Frequency`         = as.numeric(out),
-      `Percent`           = sprintf("%5.2f", pct),
-      `Cumulative Percent`= sprintf("%5.2f", cumpct),
+      `Percent`           = round(pct,2),
+      `Cumulative Percent`= round(cumpct,2),
       stringsAsFactors    = FALSE,
       check.names         = FALSE
     )
@@ -92,7 +92,7 @@ missing_summary <- function(
     max_var_count <- sort(
       var_missing_count,
       decreasing = TRUE)
-
+    browser()
     if(missing(max_vars)){
       max_vars <- sum(max_var_count > 0, na.rm = T)
     } else if(is.infinite(max_vars)){
@@ -109,9 +109,9 @@ missing_summary <- function(
     out2 <- data.frame(
       Variable = names(max_var_count),
       `Obs Available` = nrow(data) - as.numeric(max_var_count),
-      `Percent Available` = sprintf("%5.2f",100 - max_var_pct),
+      `Percent Available` = round(100 - max_var_pct,2),
       `Obs Missing` = as.numeric(max_var_count),
-      `Percent Missing`   = sprintf("%5.2f", max_var_pct),
+      `Percent Missing`   = round(max_var_pct,2),
       stringsAsFactors    = FALSE,
       check.names         = FALSE
     )
