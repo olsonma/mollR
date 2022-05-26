@@ -17,7 +17,7 @@ ach_get_data <- function (date = NULL, dir = NULL)
   }
   possible_dirs <- dir(path = dir, pattern = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
   if (length(possible_dirs) == 0) {
-    stop("Looking in the following dir: " %|% dir)
+    stop(paste0("Looking in the following dir: ", dir))
     stop("The data directory is empty or its path was not properly specified.")
   }
   if (is.null(date)) {
