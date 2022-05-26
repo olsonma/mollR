@@ -28,16 +28,16 @@ missing_summary(airquality)
 missing_summary(airquality, type = "complete")
 missing_summary(airquality, type = "row")
 missing_summary(airquality, type = "col")
-Include only Ozone and Solar.R variables
+## Include only Ozone and Solar.R variables
 missing_summary(airquality, type = "row", include_vars = c("Ozone", "Solar.R"))
 missing_summary(airquality, type = "row", include_vars = "Oz|Solar")
 missing_summary(airquality, type = "both", include_vars = "Oz|Solar")
 missing_summary(airquality, type = "row", upper_limit = 1)
-Below, the upper_limit will provide the same results
+## Below, the upper_limit will provide the same results
 missing_summary(airquality, type = "row", upper_limit = 3)
-upper_limit = 6 will not return "N+" like the above example because `airquality` has 6 total variables
+## upper_limit = 6 will not return "N+" like the above example because `airquality` has 6 total variables
 missing_summary(airquality, type = "row", upper_limit = 6)
-drop Ozone only
+## drop Ozone only
 missing_summary(airquality, type = "col", include_vars = "!Ozone")
 }
 \keyword{missingness_info}
