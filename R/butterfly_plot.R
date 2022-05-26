@@ -31,9 +31,9 @@ butterfly_plot <- function (x, y, col1 = "#FF000060", col2 = "#3200D360", border
   if(flipaxis){
     plot.window(xlim =c(0, nrow(t1)), ylim =c(-1, 1) * max(t2))
     barplot(t2[, 1], horiz = F, width = 1, space = 0, names.arg = "", 
-            add = TRUE, axes = TRUE, col = col1, border = border1)
+            add = TRUE, axes = FALSE, col = col1, border = border1)
     barplot(-t2[, 2], horiz = F, width = 1, space = 0, names.arg = "", 
-            add = TRUE, axes = TRUE, col = col2, border = border2)
+            add = TRUE, axes = FALSE, col = col2, border = border2)
     box()
     rng <- if(is.null(psrange)) range(x) else psrange
     at1 <- axisTicks(rng, log = FALSE)
