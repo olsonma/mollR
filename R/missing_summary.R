@@ -31,7 +31,7 @@ missing_summary <- function(
   include_vars,
   type = "both" ##complete will be # of obs with a complete record (row)
 ){
-  if(!any(type == c("both", "row", "col", "complete")) | length(type > 1)) stop("type must be one of \"both\", \"row\", \"col\", or \"complete\"")
+  if(!any(type == c("both", "row", "col", "complete")) | length(type) > 1) stop("type must be one of \"both\", \"row\", \"col\", or \"complete\"")
   if(!missing(include_vars)){
     if(length(include_vars) == 1){
       data <- data[,grep(include_vars, names(data), ignore.case = TRUE)]
