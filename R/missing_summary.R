@@ -4,7 +4,8 @@
 #' @param data A data.frame object for which a missing data report will be generated
 #' @param type Type of output. One of `"both"`, `"row"`, `"col"`, or `"complete"`. The default is `"both"` for both `"row"`-wise and `"col"`-wise missing data summaries. `type="complete"` will report proportion of records with complete data. 
 #' @param upper_limit A number.  The right tail of the frequency distribution reported in the `type="row"` summary is truncated to "upper_limit +".
-#' @param max_vars  A number.  Limits the list of variables reported `type="col"` to the first `max_vars` most frequently missing variables.  If there are multiple variables with the same number of missing values, all such the variables will be reported. (This means more than max_vars variables can appear in the output)
+#' @param max_vars  A number. If not specified, will report the variables with missing data. If specified, limits the list of variables reported `type="col"` to the first `max_vars` most frequently missing variables. 
+#'If there are multiple variables with the same number of missing values, all such the variables will be reported. (This means more than max_vars variables can appear in the output). Can specify `Inf` if all variables are desired, including those without missing data.
 #' @param include_vars A vector of variable names or a regular expression to select variables that match a pattern. You may drop variables by providing a regular expression preceded by `!` (`include_vars = "!qol"`, for example, would drop variables matched by "qol") 
 #' @details The output is a list with the "by row" summary and the "by column" summary.
 #' @keywords missingness_info
@@ -14,16 +15,16 @@
 #' missing_summary(airquality, type = "complete")
 #' missing_summary(airquality, type = "row")
 #' missing_summary(airquality, type = "col")
-#' Include only Ozone and Solar.R variables
+#' ## Include only Ozone and Solar.R variables
 #' missing_summary(airquality, type = "row", include_vars = c("Ozone", "Solar.R"))
 #' missing_summary(airquality, type = "row", include_vars = "Oz|Solar")
 #' missing_summary(airquality, type = "both", include_vars = "Oz|Solar")
 #' missing_summary(airquality, type = "row", upper_limit = 1)
-#' Below, the upper_limit will provide the same results
+#' ## Below, the upper_limit will provide the same results
 #' missing_summary(airquality, type = "row", upper_limit = 3)
-#' upper_limit = 6 will not return "N+" like the above example because `airquality` has 6 total variables
+#' ## upper_limit = 6 will not return "N+" like the above example because `airquality` has 6 total variables
 #' missing_summary(airquality, type = "row", upper_limit = 6)
-#' drop Ozone only
+#' ## drop Ozone only
 #' missing_summary(airquality, type = "col", include_vars = "!Ozone")
 
 missing_summary <- function(
@@ -34,6 +35,7 @@ missing_summary <- function(
   type = "both" ##complete will be # of obs with a complete record (row)
 ){
   if(!any(type == c("both", "row", "col", "complete")) | length(type) > 1) stop("type must be one of \"both\", \"row\", \"col\", or \"complete\"")
+
   if(!missing(include_vars)){
     if(length(include_vars) == 1){
       if(grepl("\\!", include_vars)){
@@ -47,12 +49,6 @@ missing_summary <- function(
     } else {
       stop("include_vars must be a character vector or regular expression")
     }
-  }
-  
-  if(missing(max_vars)){
-    max_vars <- ncol(data)
-  } else { 
-    max_vars <- min(ncol(data), max_vars)
   }
   
   if(type %in% c("row", "both", "complete")){  
@@ -92,9 +88,19 @@ missing_summary <- function(
   
   if(type %in% c("col", "both")){
     var_missing_count <- apply(is.na(data),2, sum)
+
     max_var_count <- sort(
       var_missing_count,
       decreasing = TRUE)
+
+    if(missing(max_vars)){
+      max_vars <- sum(max_var_count > 0, na.rm = T)
+    } else if(is.infinite(max_vars)){
+      max_vars <- ncol(data)
+    } else {
+      max_vars <- min(ncol(data), max_vars)
+    }
+    
     cutoff <- max_var_count[max_vars]
     max_var_count <- max_var_count[max_var_count >= cutoff]
     max_var_pct <- 100*as.numeric(max_var_count) / nrow(data)

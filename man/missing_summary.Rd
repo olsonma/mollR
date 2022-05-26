@@ -11,7 +11,8 @@ missing_summary(data, upper_limit, max_vars, include_vars, type = "both")
 
 \item{upper_limit}{A number.  The right tail of the frequency distribution reported in the \code{type="row"} summary is truncated to "upper_limit +".}
 
-\item{max_vars}{A number.  Limits the list of variables reported \code{type="col"} to the first \code{max_vars} most frequently missing variables.  If there are multiple variables with the same number of missing values, all such the variables will be reported. (This means more than max_vars variables can appear in the output)}
+\item{max_vars}{A number. If not specified, will report the variables with missing data. If specified, limits the list of variables reported \code{type="col"} to the first \code{max_vars} most frequently missing variables.
+If there are multiple variables with the same number of missing values, all such the variables will be reported. (This means more than max_vars variables can appear in the output). Can specify \code{Inf} if all variables are desired, including those without missing data.}
 
 \item{include_vars}{A vector of variable names or a regular expression to select variables that match a pattern. You may drop variables by providing a regular expression preceded by \code{!} (\code{include_vars = "!qol"}, for example, would drop variables matched by "qol")}
 
