@@ -92,7 +92,7 @@ missing_summary <- function(
     max_var_count <- sort(
       var_missing_count,
       decreasing = TRUE)
-    browser()
+    
     if(missing(max_vars)){
       max_vars <- sum(max_var_count > 0, na.rm = T)
     } else if(is.infinite(max_vars)){

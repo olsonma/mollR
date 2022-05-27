@@ -3,6 +3,9 @@
 \name{fvn}
 \alias{fvn}
 \title{fvn}
+\usage{
+fvn(pattern, data = NULL)
+}
 \arguments{
 \item{pattern}{A character string regex search expression}
 
@@ -10,5 +13,8 @@
 }
 \description{
 Short for "find variable name." List variable names / vector items which match a search expression
+}
+\examples{
+fvn("length", iris)
 }
 \keyword{fvn}

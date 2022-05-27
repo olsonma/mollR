@@ -7,9 +7,6 @@
 #' @param data A data.frame object
 #' 
 #' @keywords fvn
-NULL
-
-#' @rdname findvarname
 #' @examples
 #' fvn("length", iris)
 #' @export
