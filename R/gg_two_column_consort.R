@@ -10,7 +10,6 @@
 #' @param top_box_text string, text to display in top box of diagram
 #' @param date string, date of data pull. if NULL, won't display date.
 #' @export
-#' @examples
 
 
 gg_two_column_consort <- function (data, var, top_box_text, date = NULL)
