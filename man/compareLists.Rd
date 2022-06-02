@@ -25,3 +25,4 @@ l2 <- list(tmp1 = data.frame(x = 1:99, y = 99:1), tmp2 = data.frame(a = letters[
 compareLists(l1, l2)
 compareLists(l2, l1)
 }
+\keyword{list}
