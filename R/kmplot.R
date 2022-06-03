@@ -53,6 +53,7 @@ kmplot <- function(df
   if(class(km) != "survfit") stop("km must be of class survfit")
   if(missing(colors)) colors <- rep("black", length(km$strata))
   if(missing(labs)) labs <- attr(km$strata, "names")
+
   ggsurv <- ggsurvplot(km, 
                        data = df, 
                        break.time.by = break.int,
