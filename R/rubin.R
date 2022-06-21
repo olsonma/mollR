@@ -22,7 +22,9 @@ rubin <- function(df){
               cv = theta/sepool,
               p = 2*pnorm(abs(cv), lower.tail = F)
     ) %>% 
-    select(nimp, variable, theta, sepool, cv, p)
+    mutate(lower = theta - 1.96*sepool,
+           upper = theta + 1.96*sepool)
+    select(nimp, variable, theta, sepool, cv, p, lower, upper)
   
   return(out)
 }
