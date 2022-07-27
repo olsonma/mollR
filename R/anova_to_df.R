@@ -25,5 +25,5 @@ anova_to_df <- function(anv, incl_total = F, p_nice = F){
        TRUE ~ as.character(round(P, 3)))
      )
   }
-  return(out)
+  return(anv_df)
 }
