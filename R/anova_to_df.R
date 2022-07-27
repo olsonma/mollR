@@ -11,8 +11,13 @@ anova_to_df <- function(anv, incl_total = F, p_nice = F){
   if(!any(class(anv) == "anova.rms")) stop("anv must be an anova.rms object")
   
   anv_df <- as.data.frame(anv)
-  anv_df <- cbind(Variables = rownames(anv_df), anv_df) %>% 
-    `rownames<-`(NULL) 
+  anv_df <- cbind(Variables = gsub("\\.", " ", rownames(anv_df)), anv_df) %>% 
+    mutate(Variables = case_when(
+      grepl("Nonlinear", Variables, ignore.case = T) ~ "Nonlinear",
+      grepl("Interaction", Variables, ignore.case = T) ~ "Interactions",
+      TRUE ~ Variables
+    )) %>%
+    `rownames<-`(NULL)
   
   if(!incl_total){
     anv_df <- anv_df %>% filter(!grepl("total", Variables, ignore.case = T))
