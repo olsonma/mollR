@@ -15,6 +15,7 @@ kmplot(
   cumevents = T,
   lgd = "top",
   ttl = "",
+  textsize = 4,
   ylab = "",
   xlab = "",
   height = 10,
@@ -45,6 +46,8 @@ kmplot(
 \item{lgd}{character specifying the legend location. Default is "top"}
 
 \item{ttl}{legend title}
+
+\item{textsize}{text size. default is 4}
 
 \item{ylab}{y-axis label}
 
